@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="initial-scale=1,width=device-width" />
+	<meta name="description" content="CoronaVirus Tracker application updated per hour" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<title>CoronaVirus Tracker</title>
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="color: rgb(150, 150, 150); text-align: center;">CoronaVirus Tracker</h1>
+		<h4 style="text-align: center;">Presents current number of cases reported globally with automatic update every hour</h4>	
+		
+		<div class="jumbotron" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; width: 100%">
+			<h2 class="display-4" style="color: rgba(55,55,200,0.8)" th:text="${totalReportedCases}"></h2>
+			<p class="lead">Total confirmed cases reported as of today</p>
+			<hr style="width: 100%" />
+			<h2 class="display-4" style="color: rgba(55,200,55,0.8)" th:text="${totalRecovered}"></h2>
+			<p class="lead">Total recovered cases reported as of today</p>
+			<hr style="width: 100%" />
+			<h2 class="display-4" style="color: rgba(200,55,55,0.8)" th:text="${totalDeaths}"></h2>
+			<p class="lead">Total deaths reported as of today</p>
+			<hr style="width: 100%" />
+			<p>
+				<span>New cases reported since previous day: </span>
+				<span style="color: rgba(55, 55, 215, 0.8);" th:text="${totalNewCases}"></span>
+			</p>
+		</div>
+		
+		<table class="table">
+			<tr style="position: sticky;">
+				<th>States</th>
+				<th>Country</th>
+				<th>Total Confirmed</th>
+				<th>Confirmed Since Prev Day</th>
+				<th>Total Recovered</th>
+				<th>Recovered Since Prev Day</th>
+				<th>Total Deaths</th>
+				<th>Deaths Since Prev Day</th>
+			</tr>
+			<tr th:each="locationStat : ${locationStats}">
+				<td th:text="${locationStat.state}"></td>
+				<td th:text="${locationStat.country}"></td>
+				<td th:text="${locationStat.latestTotalCases}">0</td>
+				<td th:text="${locationStat.diffFromPrevDay}">0</td>
+				<td th:text="${locationStat.totalRecovered}">0</td>
+				<td th:text="${locationStat.recoveredSincePrevDay}">0</td>
+				<td th:text="${locationStat.totalDeaths}">0</td>
+				<td th:text="${locationStat.deathsSincePrevDay}">0</td>
+			</tr>
+		</table>
+	</div>
+	
+	<footer style="display: flex; width: 100%; justify-content: center; align-items: center; flex-direction: column; gap: 10px; background: rgb(238, 238, 238); padding: 15px 5px;">
+		<button class="btn btn-primary" onclick="openDataSource()">Check out data source</button>
+		<h5>Developed by <strong style="color: rgb(55, 155, 200);">Adeniran J. Olukanni</strong></h5>
+		<button class="btn btn-primary" style="flex: 1;" onclick="openGithubProf()">Github Profile</button>
+	</footer>
+	
+	<script>
+		function openDataSource() {
+			window.open('https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data', '_blank');
+		}
+		function openGithubProf() {
+			window.open('https://github.com/niranad', '_blank');
+		}
+	</script>
+</body>
+
+</html>
