@@ -71,11 +71,11 @@
 	
 	<footer>
 		<div>
-			<button class="btn btn-primary" onclick="openSource('https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data')">Check out data source</button>
-			<button class="btn btn-primary" onclick="openSource('https://github.com/niranad/spring-coronavirus-tracker')">View Code on Github</button>
+			<button class="btn btn-primary" onclick="openUrl('https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data')">Check out data source</button>
+			<button class="btn btn-primary" onclick="openUrl('https://github.com/niranad/spring-coronavirus-tracker')">View Code on Github</button>
 		</div>
 		<h5>Developed by <strong style="color: rgb(55, 155, 200);">Adeniran J. Olukanni</strong></h5>
-		<button class="btn btn-primary" style="flex: 1;" onclick="openGithubProf()">Github Profile</button>
+		<button class="btn btn-primary" style="flex: 1;" onclick="openUrl('https://github.com/niranad')">Github Profile</button>
 	</footer>
 	
 	<script>
@@ -89,12 +89,8 @@
 		
 		document.addEventListener('scroll', scrollListener);
 		
-		function openSource(url) {
+		function openUrl(url) {
 			window.open(url, '_blank');
-		}
-		
-		function openGithubProf() {
-			window.open('https://github.com/niranad', '_blank');
 		}
 			
 		function scrollListener() {
