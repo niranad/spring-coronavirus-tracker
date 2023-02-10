@@ -1,2 +1,2 @@
-## CoronaVirus Tracker Application
-CoronaVirus Tracker web service built using Java and Spring framework. It requests for COVID-19 cases csv reports from John Hopkins CSSEGISandData Github repo, processes the data and presents the result in a html document
+## Coronavirus Tracker
+A Coronavirus Tracker application built using Java and Spring framework. It requests csv reports from John Hopkins [CSSEGISandData](https://github.com/CSSEGISandData) Github repo, processes the data and return an html document with the formatted result. The application is configured to refetch the data every hour (i.e. HH:00:00) to integrate the automated updates provided by the data source.
