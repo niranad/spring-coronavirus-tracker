@@ -25,13 +25,13 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class CoronaVirusDataService {
 
-	private static String GLOBAL_CONFIRMED_CASES_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
-	private static String GLOBAL_DEATHS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
-	private static String GLOBAL_RECOVERED_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
+	private static final String GLOBAL_CONFIRMED_CASES_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+	private static final String GLOBAL_DEATHS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
+	private static final String GLOBAL_RECOVERED_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
 	private List<LocationStats> allStats = new ArrayList<>();
 
 	@PostConstruct
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(fixedRate=60*60*1000)
 	public void fetchVirusData() throws IOException, InterruptedException {
 		Map<String, LocationStats> statsMap = new HashMap<>();
 		List<LocationStats> newStats = new ArrayList<>();
