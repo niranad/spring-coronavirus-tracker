@@ -29,7 +29,11 @@ public class CoronaVirusDataService {
 	private static final String GLOBAL_CONFIRMED_CASES_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 	private static final String GLOBAL_DEATHS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
 	private static final String GLOBAL_RECOVERED_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv";
-	private static enum CsvData {CONFIRMED, RECOVERED, DEATH };
+
+	private static enum CsvData {
+		CONFIRMED, RECOVERED, DEATH
+	};
+
 	private List<LocationStats> allStats = new ArrayList<>();
 
 	@PostConstruct
@@ -71,21 +75,22 @@ public class CoronaVirusDataService {
 			String dateNow, String datePrev) {
 		for (CSVRecord record : records) {
 			LocationStats locationStats;
-			
+
 			if (csvData != CsvData.CONFIRMED) {
 				if (!record.get("Province/State").isBlank()) {
 					locationStats = statsMap.get(record.get("Province/State"));
 				} else {
 					locationStats = statsMap.get(record.get("Country/Region"));
 				}
-				
+
 				if (locationStats == null) {
 					locationStats = new LocationStats();
 					locationStats.setState(record.get("Province/State"));
 					locationStats.setCountry(record.get("Country/Region"));
-					statsMap.put(locationStats.getState().isBlank() ? locationStats.getCountry() : locationStats.getState(),
+					statsMap.put(
+							locationStats.getState().isBlank() ? locationStats.getCountry() : locationStats.getState(),
 							locationStats);
-				}				
+				}
 			} else {
 				locationStats = new LocationStats();
 				locationStats.setState(record.get("Province/State"));
@@ -112,13 +117,17 @@ public class CoronaVirusDataService {
 			int prevDayTotalCases = record.isMapped(datePrev) ? Integer.parseInt(record.get(datePrev)) : 0;
 
 			if (csvData == CsvData.RECOVERED) {
-				locationStats.setRecoveredSincePrevDay(
-						todayTotalCases > prevDayTotalCases ? todayTotalCases - prevDayTotalCases : 0);
+				locationStats.setRecoveredSincePrevDay(prevDayTotalCases > 0 && todayTotalCases > prevDayTotalCases
+						? todayTotalCases - prevDayTotalCases
+						: 0);
 			} else if (csvData == CsvData.DEATH) {
-				locationStats.setDeathsSincePrevDay(
-						todayTotalCases > prevDayTotalCases ? todayTotalCases - prevDayTotalCases : 0);
+				locationStats.setDeathsSincePrevDay(prevDayTotalCases > 0 && todayTotalCases > prevDayTotalCases
+						? todayTotalCases - prevDayTotalCases
+						: 0);
 			} else {
-				locationStats.setDiffFromPrevDay(prevDayTotalCases);
+				locationStats.setDiffFromPrevDay(prevDayTotalCases > 0 && todayTotalCases > prevDayTotalCases
+						? todayTotalCases - prevDayTotalCases
+						: 0);
 			}
 		}
 	}
