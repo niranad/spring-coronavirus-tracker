@@ -37,7 +37,7 @@ public class CoronaVirusDataService {
 	private List<LocationStats> allStats = new ArrayList<>();
 
 	@PostConstruct
-	@Scheduled(fixedRate = 60 * 60 * 1000)
+	@Scheduled(fixedRate = 60 * 360 * 1000)
 	public void fetchVirusData() throws IOException, InterruptedException {
 		Map<String, LocationStats> statsMap = new HashMap<>();
 		List<LocationStats> newStats = new ArrayList<>();
