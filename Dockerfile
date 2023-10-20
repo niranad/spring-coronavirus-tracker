@@ -6,7 +6,7 @@ COPY src ./src
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 # Stage 2: Create a lightweight image with Java 17 and the Spring Boot application
-FROM adoptopenjdk/openjdk17:alpine-jre
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/application.jar
 ENTRYPOINT ["java", "-jar", "application.jar"]
